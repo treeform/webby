@@ -1,4 +1,4 @@
-import webby/httpheaders, webby/queryparams, std/strutils
+import std/strutils, webby/httpheaders, webby/queryparams
 
 export httpheaders, queryparams
 
