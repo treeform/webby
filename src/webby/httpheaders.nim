@@ -5,7 +5,7 @@ type HttpHeaders* = distinct seq[(string, string)]
 converter toBase*(headers: var HttpHeaders): var seq[(string, string)] =
   headers.distinctBase
 
-converter toBase*(headers: HttpHeaders): seq[(string, string)] =
+converter toBase*(headers: HttpHeaders): lent seq[(string, string)] =
   headers.distinctBase
 
 proc contains*(headers: HttpHeaders, key: string): bool =
