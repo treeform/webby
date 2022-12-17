@@ -8,6 +8,9 @@ converter toBase*(headers: var HttpHeaders): var seq[(string, string)] =
 converter toBase*(headers: HttpHeaders): lent seq[(string, string)] =
   headers.distinctBase
 
+converter toWebby*(headers: seq[(string, string)]): HttpHeaders =
+  headers.HttpHeaders
+
 proc contains*(headers: HttpHeaders, key: string): bool =
   ## Checks if there is at least one header for the key. Not case sensitive.
   for (k, v) in headers:
