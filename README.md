@@ -10,4 +10,4 @@ Webby is a collection of common HTTP data structures and functionality. This inc
 
 You probably won't be importing this directly. Instead, it will come along as a dependency for another library you are using.
 
-Some libraries using Webby include (coming soon).
+Some libraries using Webby include [Mummy](https://github.com/guzba/mummy) and [Puppy](https://github.com/treeform/puppy).
