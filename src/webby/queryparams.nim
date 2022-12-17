@@ -5,7 +5,7 @@ type QueryParams* = distinct seq[(string, string)]
 converter toBase*(params: var QueryParams): var seq[(string, string)] =
   params.distinctBase
 
-converter toBase*(params: QueryParams): seq[(string, string)] =
+converter toBase*(params: QueryParams): lent seq[(string, string)] =
   params.distinctBase
 
 proc encodeQueryComponent*(s: string): string =
