@@ -2,6 +2,16 @@ import std/strutils, webby/httpheaders, webby/queryparams
 
 export httpheaders, queryparams
 
+## Parses URIs and URLs
+##
+##  The following are two example URLs and their component parts::
+##
+##       https://admin:hunter1@example.com:8042/over/there?name=ferret#nose
+##        \_/   \___/ \_____/ \_________/ \__/\_________/ \_________/ \__/
+##         |      |       |       |        |       |          |         |
+##       scheme username password hostname port   path[s]    query fragment
+##
+
 type Url* = object
   scheme*, username*, password*: string
   hostname*, port*, fragment*: string
