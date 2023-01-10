@@ -177,3 +177,7 @@ block:
   doAssert url.paths == @["a", "b c", "d"]
   url.path = ""
   doAssert url.paths == @[]
+
+block:
+  let url = parseUrl("?param=?")
+  doAssert url.query == @[("param", "?")]
