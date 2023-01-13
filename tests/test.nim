@@ -181,3 +181,9 @@ block:
 block:
   let url = parseUrl("?param=?")
   doAssert url.query == @[("param", "?")]
+
+block:
+  let url = parseUrl("/abc%ghi/?param=cde%hij#def%ijk")
+  doAssert url.paths == @["abc%ghi", ""]
+  doAssert url.query == @[("param", "cde%hij")]
+  doAssert url.fragment == "def%ijk"

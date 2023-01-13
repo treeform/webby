@@ -15,14 +15,14 @@ proc encodeQueryComponent*(s: string): string =
   result = newStringOfCap(s.len)
   for c in s:
     case c:
-      of ' ':
-        result.add '+'
-      of 'a'..'z', 'A'..'Z', '0'..'9',
-        '-', '.', '_', '~', '!', '*', '\'', '(', ')':
-        result.add(c)
-      else:
-        result.add '%'
-        result.add toHex(ord(c), 2)
+    of ' ':
+      result.add '+'
+    of 'a'..'z', 'A'..'Z', '0'..'9',
+      '-', '.', '_', '~', '!', '*', '\'', '(', ')':
+      result.add(c)
+    else:
+      result.add '%'
+      result.add toHex(ord(c), 2)
 
 proc decodeQueryComponent*(s: string): string =
   ## Takes a string and decodes it from the x-www-form-urlencoded format.
@@ -30,13 +30,16 @@ proc decodeQueryComponent*(s: string): string =
   var i = 0
   while i < s.len:
     case s[i]:
-      of '%':
+    of '%':
+      if s[i+1] in HexDigits and s[i+2] in HexDigits:
         result.add chr(fromHex[uint8](s[i+1 .. i+2]))
         i += 2
-      of '+':
-        result.add ' '
       else:
         result.add s[i]
+    of '+':
+      result.add ' '
+    else:
+      result.add s[i]
     inc i
 
 proc `[]`*(query: QueryParams, key: string): string =

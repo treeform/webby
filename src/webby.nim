@@ -23,19 +23,19 @@ proc encodeURIComponent*(s: string): string =
   result = newStringOfCap(s.len)
   for c in s:
     case c:
-      of 'a'..'z', 'A'..'Z', '0'..'9',
-        '-', '.', '_', '~', '!', '*', '\'', '(', ')':
-        result.add(c)
-      else:
-        result.add '%'
-        result.add toHex(ord(c), 2)
+    of 'a'..'z', 'A'..'Z', '0'..'9',
+      '-', '.', '_', '~', '!', '*', '\'', '(', ')':
+      result.add(c)
+    else:
+      result.add '%'
+      result.add toHex(ord(c), 2)
 
 proc decodeURIComponent*(s: string): string =
   ## Encodes the string the same as decodeURIComponent does in the browser.
   result = newStringOfCap(s.len)
   var i = 0
   while i < s.len:
-    if s[i] == '%':
+    if s[i] == '%' and s[i+1] in HexDigits and s[i+2] in HexDigits:
       result.add chr(fromHex[uint8](s[i+1 .. i+2]))
       i += 2
     else:
