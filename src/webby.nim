@@ -1,6 +1,6 @@
-import std/strutils, webby/httpheaders, webby/queryparams
+import std/strutils, webby/httpheaders, webby/queryparams, webby/multipart
 
-export httpheaders, queryparams
+export httpheaders, queryparams, multipart
 
 ## Parses URIs and URLs
 ##
