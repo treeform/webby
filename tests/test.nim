@@ -1,4 +1,4 @@
-import webby
+import webby, strutils
 
 block:
   let test = "foo://admin:hunter1@example.com:8042/over/there?name=ferret#nose"
@@ -187,3 +187,21 @@ block:
   doAssert url.paths == @["abc%ghi", ""]
   doAssert url.query == @[("param", "cde%hij")]
   doAssert url.fragment == "def%ijk"
+
+block:
+  var entries: seq[MultipartEntry]
+  entries.add MultipartEntry(
+    name: "input_text",
+    fileName: "input.txt",
+    contentType: "text/plain",
+    payload: "foobar"
+  )
+  entries.add MultipartEntry(
+    name: "options",
+    payload: "{\"utf8\":true}"
+  )
+  let (contentType, body) = encodeMultipart(entries)
+
+  doAssert contentType.startsWith("multipart/form-data; boundary=")
+  let boundary = contentType[30 .. ^1]
+  doAssert body.replace(boundary, "QQQ") == "--QQQ\r\nContent-Disposition: form-data; name=\"input_text\"; filename=\"input.txt\"\r\nContent-Type: text/plain\r\n\r\nfoobar\r\n--QQQ\r\nContent-Disposition: form-data; name=\"options\"\r\n\r\n{\"utf8\":true}\r\n--QQQ--\r\n"
