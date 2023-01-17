@@ -1,4 +1,4 @@
-import random
+import std/random
 
 type
   MultipartEntry* = object
