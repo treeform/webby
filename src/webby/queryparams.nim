@@ -5,8 +5,12 @@ type QueryParams* = distinct seq[(string, string)]
 converter toBase*(params: var QueryParams): var seq[(string, string)] =
   params.distinctBase
 
-converter toBase*(params: QueryParams): lent seq[(string, string)] =
-  params.distinctBase
+when (NimMajor, NimMinor, NimPatch) >= (1, 4, 8):
+  converter toBase*(params: QueryParams): lent seq[(string, string)] =
+    params.distinctBase
+else: # Older versions
+  converter toBase*(params: QueryParams): seq[(string, string)] =
+    params.distinctBase
 
 proc encodeQueryComponent*(s: string): string =
   ## Similar to encodeURIComponent, however query parameter spaces should
@@ -18,7 +22,7 @@ proc encodeQueryComponent*(s: string): string =
     of ' ':
       result.add '+'
     of 'a'..'z', 'A'..'Z', '0'..'9',
-      '-', '.', '_', '~', '!', '*', '\'', '(', ')':
+      '-', '.', '_', '~', '!', '*', '\'', '(', ')', '?':
       result.add(c)
     else:
       result.add '%'

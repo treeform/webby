@@ -1,4 +1,4 @@
-import random
+import std/random, std/monotimes
 
 type
   MultipartEntry* = object
@@ -9,7 +9,7 @@ type
 
 const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 proc generateBoundary(): string =
-  var rand = initRand()
+  var rand = initRand(getMonoTime().ticks)
   for i in 0 ..< 32:
     result.add rand.sample(chars)
 

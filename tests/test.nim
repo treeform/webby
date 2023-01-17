@@ -66,7 +66,7 @@ block:
 block:
   let test = "?name=&age&legs=4"
   let url = parseUrl(test)
-  doAssert url.query == @[("name", ""), ("age", ""), ("legs", "4")]
+  doAssert $url.query == "name=&age=&legs=4"
 
 block:
   var url = Url()
@@ -114,13 +114,12 @@ block:
 block:
   let test = "name=&age&legs=4"
   let url = parseUrl(test)
-  doAssert url.query == @[("name", ""), ("age", ""), ("legs", "4")]
+  doAssert $url.query == "name=&age=&legs=4"
 
 block:
   let test = "name=&age&legs=4&&&"
   let url = parseUrl(test)
-  doAssert url.query ==
-    @[("name", ""), ("age", ""), ("legs", "4"), ("", ""), ("", ""), ("", "")]
+  doAssert $url.query == "name=&age=&legs=4&=&=&="
 
 block:
   let test = "https://localhost:8080"
@@ -136,13 +135,13 @@ block:
   let test = "https://localhost:8080/&url=1"
   let url = parseUrl(test)
   doAssert url.paths == @[""]
-  doAssert url.query == @[("url", "1")]
+  doAssert $url.query == "url=1"
 
 block:
   let test = "https://localhost:8080/?url=1"
   let url = parseUrl(test)
   doAssert url.paths == @[""]
-  doAssert url.query == @[("url", "1")]
+  doAssert $url.query == "url=1"
 
 block:
   doAssert encodeURIComponent("-._~!*'()") == "-._~!*'()"
@@ -152,7 +151,7 @@ block:
   let test = "?url=1&two=2"
   let url = parseUrl(test)
   doAssert url.paths == @[]
-  doAssert url.query == @[("url", "1"), ("two", "2")]
+  doAssert $url.query == "url=1&two=2"
 
 block:
   var url: Url
@@ -180,12 +179,12 @@ block:
 
 block:
   let url = parseUrl("?param=?")
-  doAssert url.query == @[("param", "?")]
+  doAssert $url.query == "param=?"
 
 block:
   let url = parseUrl("/abc%ghi/?param=cde%hij#def%ijk")
   doAssert url.paths == @["abc%ghi", ""]
-  doAssert url.query == @[("param", "cde%hij")]
+  doAssert url.query["param"] == "cde%hij"
   doAssert url.fragment == "def%ijk"
 
 block:
