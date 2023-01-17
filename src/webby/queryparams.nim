@@ -18,7 +18,7 @@ proc encodeQueryComponent*(s: string): string =
     of ' ':
       result.add '+'
     of 'a'..'z', 'A'..'Z', '0'..'9',
-      '-', '.', '_', '~', '!', '*', '\'', '(', ')':
+      '-', '.', '_', '~', '!', '*', '\'', '(', ')', '?':
       result.add(c)
     else:
       result.add '%'
