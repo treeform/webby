@@ -21,6 +21,7 @@ jobs:
       with:
         nim-version: ${{ matrix.nim-version }}
         repo-token: ${{ secrets.GITHUB_TOKEN }}
+    - run: nimble test -y
     - run: nimble test -d:release -y
     - run: nimble test --gc:orc -d:release -y
       if: ${{ matrix.gc_orc }}
