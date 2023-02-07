@@ -204,3 +204,7 @@ block:
   doAssert contentType.startsWith("multipart/form-data; boundary=")
   let boundary = contentType[30 .. ^1]
   doAssert body.replace(boundary, "QQQ") == "--QQQ\r\nContent-Disposition: form-data; name=\"input_text\"; filename=\"input.txt\"\r\nContent-Type: text/plain\r\n\r\nfoobar\r\n--QQQ\r\nContent-Disposition: form-data; name=\"options\"\r\n\r\n{\"utf8\":true}\r\n--QQQ--\r\n"
+
+block:
+  let url = "http://site.com#a#frag#ment"
+  doAssert parseUrl(url).fragment == "a#frag#ment"

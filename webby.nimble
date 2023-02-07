@@ -1,4 +1,4 @@
-version     = "0.1.6"
+version     = "0.1.7"
 author      = "Andre von Houck and Ryan Oldenburg"
 description = "Common HTTP data structures and functionality"
 license     = "MIT"
