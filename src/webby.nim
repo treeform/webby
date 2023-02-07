@@ -61,7 +61,7 @@ proc parseUrl*(s: string): Url =
     s = s
     url: Url
 
-  let hasFragment = s.rfind('#')
+  let hasFragment = s.find('#')
   if hasFragment != -1:
     url.fragment = decodeURIComponent(s[hasFragment + 1 .. ^1])
     s = s[0 .. hasFragment - 1]
