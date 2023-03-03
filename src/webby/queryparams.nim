@@ -18,7 +18,7 @@ proc encodeQueryComponent*(s: string): string =
   ## The encoded string is in the x-www-form-urlencoded format.
   result = newStringOfCap(s.len)
   for c in s:
-    case c:
+    case c
     of ' ':
       result.add '+'
     of 'a'..'z', 'A'..'Z', '0'..'9',
@@ -33,10 +33,10 @@ proc decodeQueryComponent*(s: string): string =
   result = newStringOfCap(s.len)
   var i = 0
   while i < s.len:
-    case s[i]:
+    case s[i]
     of '%':
-      if s[i+1] in HexDigits and s[i+2] in HexDigits:
-        result.add chr(fromHex[uint8](s[i+1 .. i+2]))
+      if i + 2 < s.len and s[i + 1] in HexDigits and s[i + 2] in HexDigits:
+        result.add chr(fromHex[uint8](s[i + 1 .. i + 2]))
         i += 2
       else:
         result.add s[i]

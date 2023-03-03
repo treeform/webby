@@ -182,10 +182,10 @@ block:
   doAssert $url.query == "param=?"
 
 block:
-  let url = parseUrl("/abc%ghi/?param=cde%hij#def%ijk")
+  let url = parseUrl("/abc%ghi/?param=cde%hij#def%ijk%1")
   doAssert url.paths == @["abc%ghi", ""]
   doAssert url.query["param"] == "cde%hij"
-  doAssert url.fragment == "def%ijk"
+  doAssert url.fragment == "def%ijk%1"
 
 block:
   var entries: seq[MultipartEntry]
