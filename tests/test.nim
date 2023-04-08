@@ -186,6 +186,10 @@ block:
     discard parseUrl("/abc%ghi/?param=cde%hij#def%ijk")
 
 block:
+  doAssertRaises CatchableError:
+    discard parseUrl("https://site.com/%yy")
+
+block:
   var entries: seq[MultipartEntry]
   entries.add MultipartEntry(
     name: "input_text",

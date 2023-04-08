@@ -1,4 +1,4 @@
-import std/strutils, webby/httpheaders, webby/queryparams, webby/multipart
+import std/parseutils, std/strutils, webby/httpheaders, webby/queryparams, webby/multipart
 
 export httpheaders, queryparams, multipart
 
@@ -35,9 +35,17 @@ proc decodeURIComponent*(s: string): string =
   result = newStringOfCap(s.len)
   var i = 0
   while i < s.len:
-    if s[i] == '%' and i + 2 < s.len and s[i + 1] in HexDigits and s[i + 2] in HexDigits:
-      result.add chr(fromHex[uint8](s[i + 1 .. i + 2]))
-      i += 2
+    if s[i] == '%':
+      # Ensure we have room for a hex value
+      if i + 2 >= s.len:
+        raise newException(CatchableError, "Invalid hex in URI component")
+      # Parse the hex value and add it to result
+      var v: uint8
+      if parseHex(s, v, i + 1, 2) == 0:
+        raise newException(CatchableError, "Invalid hex in URI component")
+      else:
+        result.add v.char
+        i += 2
     else:
       result.add s[i]
     inc i
