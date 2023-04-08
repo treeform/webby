@@ -25,3 +25,15 @@ for i in 0 ..< iterations:
   let parsed = parseSearch(formEncoded)
 
   doAssert $parsed == formEncoded
+
+for i in 0 ..< iterations:
+  let s = randomAsciiString()
+
+  try:
+    discard decodeQueryComponent(s)
+  except CatchableError:
+    discard
+
+  let encoded = encodeQueryComponent(s)
+
+  doAssert decodeQueryComponent(encoded) == s
