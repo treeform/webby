@@ -137,10 +137,9 @@ proc search*(url: Url): string =
 proc path*(url: Url): string =
   ## Returns the paths combined into a single path string.
   ## @["foo", "bar"] -> "/foo/bar"
-  if url.paths.len > 0:
-    for part in url.paths:
-      result.add '/'
-      result.add encodeURIComponent(part)
+  for part in url.paths:
+    result.add '/'
+    result.add encodeURIComponent(part)
 
 proc `path=`*(url: var Url, s: string) =
   if s == "":
