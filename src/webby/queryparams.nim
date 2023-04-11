@@ -1,4 +1,4 @@
-import std/strutils, std/typetraits
+import std/strutils, std/typetraits, std/parseutils
 
 type QueryParams* = distinct seq[(string, string)]
 
@@ -35,11 +35,16 @@ proc decodeQueryComponent*(s: string): string =
   while i < s.len:
     case s[i]
     of '%':
-      if i + 2 < s.len and s[i + 1] in HexDigits and s[i + 2] in HexDigits:
-        result.add chr(fromHex[uint8](s[i + 1 .. i + 2]))
-        i += 2
+      # Ensure we have room for a hex value
+      if i + 2 >= s.len:
+        raise newException(CatchableError, "Invalid hex in form encoding")
+      # Parse the hex value and add it to result
+      var v: uint8
+      if parseHex(s, v, i + 1, 2) == 0:
+        raise newException(CatchableError, "Invalid hex in form encoding")
       else:
-        result.add s[i]
+        result.add v.char
+        i += 2
     of '+':
       result.add ' '
     else:
