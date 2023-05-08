@@ -6,6 +6,8 @@
 
 [API reference](https://nimdocs.com/treeform/webby)
 
+This library has no dependencies other than the Nim standard library.
+
 Webby is a collection of common HTTP data structures and functionality. This includes things like `Url`, `HttpHeaders`, `QueryParams` etc.
 
 ## URL
