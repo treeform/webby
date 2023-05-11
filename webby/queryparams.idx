@@ -1,0 +1,11 @@
+QueryParams	webby/queryparams.html#QueryParams	queryparams: QueryParams	
+toBase	webby/queryparams.html#toBase.c,QueryParams	queryparams: toBase(params: var QueryParams): var seq[(string, string)]	
+toBase	webby/queryparams.html#toBase.c,QueryParams_2	queryparams: toBase(params: QueryParams): lent seq[(string, string)]	
+encodeQueryComponent	webby/queryparams.html#encodeQueryComponent,string	queryparams: encodeQueryComponent(s: string): string	
+decodeQueryComponent	webby/queryparams.html#decodeQueryComponent,string	queryparams: decodeQueryComponent(s: string): string	
+`[]`	webby/queryparams.html#[],QueryParams,string	queryparams: `[]`(query: QueryParams; key: string): string	
+`[]=`	webby/queryparams.html#[]=,QueryParams,string,string	queryparams: `[]=`(query: var QueryParams; key, value: string)	
+contains	webby/queryparams.html#contains,QueryParams,string	queryparams: contains(query: QueryParams; key: string): bool	
+add	webby/queryparams.html#add,QueryParams,QueryParams	queryparams: add(query: var QueryParams; params: QueryParams)	
+`$`	webby/queryparams.html#$,QueryParams	queryparams: `$`(query: QueryParams): string	
+emptyQueryParams	webby/queryparams.html#emptyQueryParams	queryparams: emptyQueryParams(): QueryParams	

@@ -1,0 +1,2 @@
+MultipartEntry	webby/multipart.html#MultipartEntry	multipart: MultipartEntry	
+encodeMultipart	webby/multipart.html#encodeMultipart,seq[MultipartEntry]	multipart: encodeMultipart(entries: seq[MultipartEntry]): (string, string)	

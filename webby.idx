@@ -1,0 +1,11 @@
+Url	webby.html#Url	webby: Url	
+encodeURIComponent	webby.html#encodeURIComponent,string	webby: encodeURIComponent(s: string): string	
+decodeURIComponent	webby.html#decodeURIComponent,string	webby: decodeURIComponent(s: string): string	
+parseSearch	webby.html#parseSearch,string	webby: parseSearch(search: string): QueryParams	
+parseUrl	webby.html#parseUrl,string	webby: parseUrl(s: string): Url	
+host	webby.html#host,Url	webby: host(url: Url): string	
+search	webby.html#search,Url	webby: search(url: Url): string	
+path	webby.html#path,Url	webby: path(url: Url): string	
+path=	webby.html#path=,Url,string	webby: path=(url: var Url; s: string)	
+authority	webby.html#authority,Url	webby: authority(url: Url): string	
+`$`	webby.html#$,Url	webby: `$`(url: Url): string	

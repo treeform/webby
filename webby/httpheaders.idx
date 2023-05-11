@@ -1,0 +1,8 @@
+HttpHeaders	webby/httpheaders.html#HttpHeaders	httpheaders: HttpHeaders	
+toBase	webby/httpheaders.html#toBase.c,HttpHeaders	httpheaders: toBase(headers: var HttpHeaders): var seq[(string, string)]	
+toBase	webby/httpheaders.html#toBase.c,HttpHeaders_2	httpheaders: toBase(params: HttpHeaders): lent seq[(string, string)]	
+toWebby	webby/httpheaders.html#toWebby.c,seq[]	httpheaders: toWebby(headers: seq[(string, string)]): HttpHeaders	
+contains	webby/httpheaders.html#contains,HttpHeaders,string	httpheaders: contains(headers: HttpHeaders; key: string): bool	
+`[]`	webby/httpheaders.html#[],HttpHeaders,string	httpheaders: `[]`(headers: HttpHeaders; key: string): string	
+`[]=`	webby/httpheaders.html#[]=,HttpHeaders,string,string	httpheaders: `[]=`(headers: var HttpHeaders; key, value: string)	
+emptyHttpHeaders	webby/httpheaders.html#emptyHttpHeaders	httpheaders: emptyHttpHeaders(): HttpHeaders	
