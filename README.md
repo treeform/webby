@@ -4,7 +4,7 @@
 
 ![Github Actions](https://github.com/treeform/webby/workflows/Github%20Actions/badge.svg)
 
-[API reference](https://nimdocs.com/treeform/webby)
+[API reference](https://treeform.github.io/webby)
 
 This library has no dependencies other than the Nim standard library.
 
