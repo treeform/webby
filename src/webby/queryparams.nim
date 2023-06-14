@@ -78,6 +78,9 @@ proc add*(query: var QueryParams, params: QueryParams) =
   for (k, v) in params:
     query.add((k, v))
 
+proc getOrDefault*(query: QueryParams, key, default: string): string =
+  if key in params: params[key] else: default
+
 proc `$`*(query: QueryParams): string =
   for i, pair in query:
     if i > 0:
