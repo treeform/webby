@@ -1,6 +1,7 @@
 Url	webby.html#Url	webby: Url	
 encodeURIComponent	webby.html#encodeURIComponent,string	webby: encodeURIComponent(s: string): string	
 decodeURIComponent	webby.html#decodeURIComponent,string	webby: decodeURIComponent(s: string): string	
+encodeURI	webby.html#encodeURI,string	webby: encodeURI(s: string): string	
 parseSearch	webby.html#parseSearch,string	webby: parseSearch(search: string): QueryParams	
 parseUrl	webby.html#parseUrl,string	webby: parseUrl(s: string): Url	
 host	webby.html#host,Url	webby: host(url: Url): string	

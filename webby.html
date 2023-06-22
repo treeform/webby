@@ -134,6 +134,11 @@ window.addEventListener('DOMContentLoaded', main);
     title="decodeURIComponent(s: string): string">decodeURIComponent(s: string): string</a></li>
 
   </ul>
+  <ul class="simple nested-toc-section">encodeURI
+      <li><a class="reference" href="#encodeURI%2Cstring"
+    title="encodeURI(s: string): string">encodeURI(s: string): string</a></li>
+
+  </ul>
   <ul class="simple nested-toc-section">encodeURIComponent
       <li><a class="reference" href="#encodeURIComponent%2Cstring"
     title="encodeURIComponent(s: string): string">encodeURIComponent(s: string): string</a></li>
@@ -232,9 +237,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Turns Url into a string. Preserves query string param ordering.
 &nbsp;&nbsp;<a
-href="https://github.com/treeform/webby/tree/master/src/webby.nim#L171"
+href="https://github.com/treeform/webby/tree/master/src/webby.nim#L183"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/treeform/webby/edit/devel/src/webby.nim#L171" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/treeform/webby/edit/devel/src/webby.nim#L183" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -244,9 +249,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Returns the authority part of URL as a string. Example: &quot;admin:hunter1@example.com:8042&quot;
 &nbsp;&nbsp;<a
-href="https://github.com/treeform/webby/tree/master/src/webby.nim#L156"
+href="https://github.com/treeform/webby/tree/master/src/webby.nim#L168"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/treeform/webby/edit/devel/src/webby.nim#L156" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/treeform/webby/edit/devel/src/webby.nim#L168" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -259,6 +264,18 @@ Encodes the string the same as decodeURIComponent does in the browser.
 href="https://github.com/treeform/webby/tree/master/src/webby.nim#L33"
 class="link-seesrc" target="_blank">Source</a>
 &nbsp;&nbsp;<a href="https://github.com/treeform/webby/edit/devel/src/webby.nim#L33" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+</div>
+<div id="encodeURI,string">
+<dt><pre><span class="Keyword">proc</span> <a href="#encodeURI%2Cstring"><span class="Identifier">encodeURI</span></a><span class="Other">(</span><span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">string</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+<dd>
+
+
+&nbsp;&nbsp;<a
+href="https://github.com/treeform/webby/tree/master/src/webby.nim#L53"
+class="link-seesrc" target="_blank">Source</a>
+&nbsp;&nbsp;<a href="https://github.com/treeform/webby/edit/devel/src/webby.nim#L53" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -280,9 +297,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Returns the hostname and port part of the URL as a string. Example: &quot;example.com:8042&quot;
 &nbsp;&nbsp;<a
-href="https://github.com/treeform/webby/tree/master/src/webby.nim#L127"
+href="https://github.com/treeform/webby/tree/master/src/webby.nim#L139"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/treeform/webby/edit/devel/src/webby.nim#L127" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/treeform/webby/edit/devel/src/webby.nim#L139" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -293,9 +310,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Parses the search part into strings pairs &quot;name=&amp;age&amp;legs=4&quot; -&gt; @[(&quot;name&quot;, &quot;&quot;), (&quot;age&quot;, &quot;&quot;), (&quot;legs&quot;, &quot;4&quot;)]
 &nbsp;&nbsp;<a
-href="https://github.com/treeform/webby/tree/master/src/webby.nim#L53"
+href="https://github.com/treeform/webby/tree/master/src/webby.nim#L65"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/treeform/webby/edit/devel/src/webby.nim#L53" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/treeform/webby/edit/devel/src/webby.nim#L65" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -305,9 +322,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Parses a URL or a URL into the Url object.
 &nbsp;&nbsp;<a
-href="https://github.com/treeform/webby/tree/master/src/webby.nim#L66"
+href="https://github.com/treeform/webby/tree/master/src/webby.nim#L78"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/treeform/webby/edit/devel/src/webby.nim#L66" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/treeform/webby/edit/devel/src/webby.nim#L78" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -317,9 +334,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Returns the paths combined into a single path string. @[&quot;foo&quot;, &quot;bar&quot;] -&gt; &quot;/foo/bar&quot;
 &nbsp;&nbsp;<a
-href="https://github.com/treeform/webby/tree/master/src/webby.nim#L137"
+href="https://github.com/treeform/webby/tree/master/src/webby.nim#L149"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/treeform/webby/edit/devel/src/webby.nim#L137" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/treeform/webby/edit/devel/src/webby.nim#L149" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -329,9 +346,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/treeform/webby/tree/master/src/webby.nim#L144"
+href="https://github.com/treeform/webby/tree/master/src/webby.nim#L156"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/treeform/webby/edit/devel/src/webby.nim#L144" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/treeform/webby/edit/devel/src/webby.nim#L156" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -341,9 +358,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Returns the search part of the URL as a string. Example: &quot;name=ferret&amp;age=12&amp;legs=4&quot;
 &nbsp;&nbsp;<a
-href="https://github.com/treeform/webby/tree/master/src/webby.nim#L132"
+href="https://github.com/treeform/webby/tree/master/src/webby.nim#L144"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/treeform/webby/edit/devel/src/webby.nim#L132" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/treeform/webby/edit/devel/src/webby.nim#L144" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -362,7 +379,7 @@ class="link-seesrc" target="_blank">Source</a>
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2023-06-22 23:36:24 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2023-06-22 23:37:25 UTC</small>
       </div>
     </div>
   </div>
