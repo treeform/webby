@@ -7,5 +7,6 @@ decodeQueryComponent	webby/queryparams.html#decodeQueryComponent,string	querypar
 `[]=`	webby/queryparams.html#[]=,QueryParams,string,string	queryparams: `[]=`(query: var QueryParams; key, value: string)	
 contains	webby/queryparams.html#contains,QueryParams,string	queryparams: contains(query: QueryParams; key: string): bool	
 add	webby/queryparams.html#add,QueryParams,QueryParams	queryparams: add(query: var QueryParams; params: QueryParams)	
+getOrDefault	webby/queryparams.html#getOrDefault,QueryParams,string,string	queryparams: getOrDefault(query: QueryParams; key, default: string): string	
 `$`	webby/queryparams.html#$,QueryParams	queryparams: `$`(query: QueryParams): string	
 emptyQueryParams	webby/queryparams.html#emptyQueryParams	queryparams: emptyQueryParams(): QueryParams	
