@@ -50,6 +50,18 @@ proc decodeURIComponent*(s: string): string =
       result.add s[i]
     inc i
 
+proc encodeURI*(s: string): string =
+  result = newStringOfCap(s.len)
+  for c in s:
+    case c
+    of 'a'..'z', 'A'..'Z', '0'..'9',
+      '-', '.', '_', '~', '!', '*', '\'', '(', ')',
+      ';', '/', '?', ':', '@', '&', '=', '+', '$', ',', '#':
+      result.add(c)
+    else:
+      result.add '%'
+      result.add toHex(ord(c), 2)
+
 proc parseSearch*(search: string): QueryParams =
   ## Parses the search part into strings pairs
   ## "name=&age&legs=4" -> @[("name", ""), ("age", ""), ("legs", "4")]

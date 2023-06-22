@@ -148,6 +148,22 @@ block:
   doAssert decodeURIComponent("-._~!*'()") == "-._~!*'()"
 
 block:
+  # https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURI
+
+  let
+    set1 = ";/?:@&=+$,#" # Reserved Characters
+    set2 = "-.!~*'()" # Unreserved Marks
+    set3 = "ABC abc 123" # Alphanumeric Characters + Space
+
+  doAssert encodeURI(set1) == ";/?:@&=+$,#"
+  doAssert encodeURI(set2) == "-.!~*'()"
+  doAssert encodeURI(set3) == "ABC%20abc%20123" # (the space gets encoded as %20)
+
+  doAssert encodeURIComponent(set1) == "%3B%2F%3F%3A%40%26%3D%2B%24%2C%23"
+  doAssert encodeURIComponent(set2) == "-.!~*'()"
+  doAssert encodeURIComponent(set3) == "ABC%20abc%20123" # (the space gets encoded as %20)
+
+block:
   let test = "?url=1&two=2"
   let url = parseUrl(test)
   doAssert url.paths == @[]
