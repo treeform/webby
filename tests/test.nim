@@ -155,6 +155,19 @@ block:
   doAssert $url.query == "param=%3F"
 
 block:
+  let targetId = 399
+
+  var url: Url
+  url.scheme = "https"
+  url.hostname = "ssd.jpl.nasa.gov"
+  url.path = "/api/horizons.api"
+  url.query["format"] = "text"
+  url.query["COMMAND"] = "'" & $targetId & "'"
+  url.query["STEP_SIZE"] = "'1 d'"
+
+  doAssert $url == "https://ssd.jpl.nasa.gov/api/horizons.api?format=text&COMMAND=%27399%27&STEP_SIZE=%271+d%27"
+
+block:
   doAssertRaises CatchableError:
     discard parseUrl("/abc%ghi/?param=cde%hij#def%ijk")
 
