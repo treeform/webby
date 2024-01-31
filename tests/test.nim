@@ -202,3 +202,8 @@ block:
   let test = "https://www.elyrics.net/read/0-9/$tupid-young,-nocap-&-steelz-lyrics/i-can_t-change-lyrics.html"
   let url = parseUrl(test)
   doAssert url.query.len == 0
+
+block:
+  let test = "https://website.com/%z"
+  doAssertRaises CatchableError:
+    discard parseUrl(test)
