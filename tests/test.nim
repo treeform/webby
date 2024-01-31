@@ -183,3 +183,8 @@ block:
 block:
   let url = "http://site.com#a#frag#ment"
   doAssert parseUrl(url).fragment == "a#frag#ment"
+
+block:
+  let test = "https://www.elyrics.net/read/0-9/$tupid-young,-nocap-&-steelz-lyrics/i-can_t-change-lyrics.html"
+  let url = parseUrl(test)
+  doAssert url.query.len == 0
