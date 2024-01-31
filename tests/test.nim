@@ -81,16 +81,17 @@ block:
 
   doAssert $url == "//example.com?q=foo#heading1"
 
-# block:
-#   var url = Url()
-#   url.hostname = "example.com"
-#   url.query["site"] = "https://nim-lang.org"
-#   url.query["https://nim-lang.org"] = "nice!!!"
-#   url.query["nothing"] = ""
-#   url.query["unicode"] = "шеллы"
-#   url.query["specials"] = "\n\t\b\r\"+&="
-#   doAssert $url == "example.com?site=https%3A%2F%2Fnim-lang.org&https%3A%2F%2Fnim-lang.org=nice!!!&nothing=&unicode=%D1%88%D0%B5%D0%BB%D0%BB%D1%8B&specials=%0A%09%08%0D%22%2B%26%3D"
-#   doAssert $parseUrl($url) == $url
+block:
+  var url = Url()
+  url.scheme = "https"
+  url.hostname = "example.com"
+  url.query["site"] = "https://nim-lang.org"
+  url.query["https://nim-lang.org"] = "nice!!!"
+  url.query["nothing"] = ""
+  url.query["unicode"] = "шеллы"
+  url.query["specials"] = "\n\t\b\r\"+&="
+  doAssert $url == "https://example.com?site=https%3A%2F%2Fnim-lang.org&https%3A%2F%2Fnim-lang.org=nice%21%21%21&nothing=&unicode=%D1%88%D0%B5%D0%BB%D0%BB%D1%8B&specials=%0A%09%08%0D%22%2B%26%3D"
+  doAssert $parseUrl($url) == $url
 
 block:
   let test = "http://localhost:8080/p2/foo+and+other+stuff"
