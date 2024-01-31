@@ -1,4 +1,4 @@
-import std/strutils, std/typetraits, std/parseutils
+import std/typetraits, std/parseutils, internal
 
 type QueryParams* = distinct seq[(string, string)]
 
@@ -16,17 +16,7 @@ proc encodeQueryComponent*(s: string): string =
   ## Similar to encodeURIComponent, however query parameter spaces should
   ## be +, not %20 like encodeURIComponent would encode them.
   ## The encoded string is in the x-www-form-urlencoded format.
-  result = newStringOfCap(s.len)
-  for c in s:
-    case c
-    of ' ':
-      result.add '+'
-    of 'a'..'z', 'A'..'Z', '0'..'9',
-      '-', '.', '_', '~', '!', '*', '\'', '(', ')', '?':
-      result.add(c)
-    else:
-      result.add '%'
-      result.add toHex(ord(c), 2)
+  escape(s, EncodeQueryComponent)
 
 proc decodeQueryComponent*(s: string): string =
   ## Takes a string and decodes it from the x-www-form-urlencoded format.
