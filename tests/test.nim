@@ -207,3 +207,8 @@ block:
   let test = "https://website.com/%z"
   doAssertRaises CatchableError:
     discard parseUrl(test)
+
+block: # https://github.com/treeform/puppy/issues/100
+  let test = "https://www.**.com/list=1,2"
+  let url = parseUrl(test)
+  doAssert $url == test
