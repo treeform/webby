@@ -9,6 +9,7 @@ block:
   doAssert url.hostname == "example.com"
   doAssert url.port == "8042"
   doAssert url.path == "/over/there"
+  doAssert url.paths == @["over", "there"]
   doAssert $url.query == "name=ferret"
   doAssert url.query["name"] == "ferret"
   doAssert "name" in url.query
@@ -25,6 +26,7 @@ block:
   doAssert url.hostname == ""
   doAssert url.port == ""
   doAssert url.path == "/over/there"
+  doAssert url.paths == @["over", "there"]
   doAssert $url.query == "name=ferret"
   doAssert url.query["name"] == "ferret"
   doAssert url.fragment == ""
@@ -39,6 +41,7 @@ block:
   doAssert url.hostname == ""
   doAssert url.port == ""
   doAssert url.path == ""
+  doAssert url.paths == @[]
   doAssert $url.query == "name=ferret&age=12&leg=1&leg=2&leg=3&leg=4"
   doAssert url.query["name"] == "ferret"
   doAssert url.query["age"] == "12"
@@ -149,7 +152,25 @@ block:
   let test = "?url=1&two=2"
   let url = parseUrl(test)
   doAssert url.path == ""
+  doAssert url.paths == @[]
   doAssert $url.query == "url=1&two=2"
+
+block:
+  var url: Url
+  url.path = "/a/b/c"
+  doAssert url.paths == @["a", "b", "c"]
+
+block:
+  var url: Url
+  url.path = "/a/b/c/"
+  doAssert url.paths == @["a", "b", "c", ""]
+
+block:
+  var url: Url
+  url.path = "a/b/c"
+  doAssert url.paths == @["a", "b", "c"]
+  url.path = ""
+  doAssert url.paths == @[]
 
 block:
   let url = parseUrl("?param=?")

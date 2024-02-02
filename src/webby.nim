@@ -19,6 +19,17 @@ type Url* = object
   opaque*, path*: string
   query*: QueryParams
 
+proc paths*(url: Url): seq[string] =
+  ## Returns the path segments (path split on '/').
+  ## This returns the same path segments for both relative and absolute
+  ## paths. For example:
+  ## "/a/b/c" -> @["a", "b", "c"]
+  ## "a/b/c" -> @["a", "b", "c"]
+  if url.path != "":
+    result = url.path.split('/')
+    if url.path.startsWith('/'):
+      result.delete(0)
+
 proc encodeURIComponent*(s: string): string =
   ## Encodes the string the same as encodeURIComponent does in the browser.
   result = newStringOfCap(s.len)
