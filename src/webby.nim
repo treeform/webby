@@ -23,6 +23,8 @@ proc paths*(url: Url): seq[string] =
   ## Returns the path segments (path split on '/').
   ## This returns the same path segments for both relative and absolute
   ## paths. For example:
+  ## "/" -> @[]
+  ## "" -> @[]
   ## "/a/b/c" -> @["a", "b", "c"]
   ## "a/b/c" -> @["a", "b", "c"]
   if url.path != "" and url.path != "/":
