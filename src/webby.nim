@@ -25,7 +25,7 @@ proc paths*(url: Url): seq[string] =
   ## paths. For example:
   ## "/a/b/c" -> @["a", "b", "c"]
   ## "a/b/c" -> @["a", "b", "c"]
-  if url.path != "":
+  if url.path != "" and url.path != "/":
     result = url.path.split('/')
     if url.path.startsWith('/'):
       result.delete(0)

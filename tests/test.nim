@@ -173,6 +173,18 @@ block:
   doAssert url.paths == @[]
 
 block:
+  var url: Url
+  url.path = "/"
+  echo url.paths
+  doAssert url.paths == @[]
+
+block:
+  var url: Url
+  url.path = "//"
+  echo url.paths
+  doAssert url.paths == @["", ""]
+
+block:
   let url = parseUrl("?param=?")
   doAssert $url.query == "param=%3F"
 
