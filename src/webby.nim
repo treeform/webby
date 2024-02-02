@@ -168,7 +168,7 @@ proc parseUrl*(s: string): Url =
       s = s[fsIdx .. ^1]
     else:
       host = move s
-    if host.startsWith("["):
+    if host.startsWith('['):
       let closingIdx = host.find(']')
       if closingIdx < 0:
         raise newException(CatchableError, "Missing ']' in URL host")
