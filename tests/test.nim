@@ -8,10 +8,9 @@ block:
   doAssert url.password == "hunter1"
   doAssert url.hostname == "example.com"
   doAssert url.port == "8042"
-  doAssert url.host == "example.com:8042"
-  doAssert url.authority == "admin:hunter1@example.com:8042"
+  doAssert url.path == "/over/there"
   doAssert url.paths == @["over", "there"]
-  doAssert url.search == "name=ferret"
+  doAssert $url.query == "name=ferret"
   doAssert url.query["name"] == "ferret"
   doAssert "name" in url.query
   doAssert "nothing" notin url.query
@@ -26,9 +25,9 @@ block:
   doAssert url.password == ""
   doAssert url.hostname == ""
   doAssert url.port == ""
-  doAssert url.authority == ""
+  doAssert url.path == "/over/there"
   doAssert url.paths == @["over", "there"]
-  doAssert url.search == "name=ferret"
+  doAssert $url.query == "name=ferret"
   doAssert url.query["name"] == "ferret"
   doAssert url.fragment == ""
   doAssert $url == test
@@ -41,9 +40,9 @@ block:
   doAssert url.password == ""
   doAssert url.hostname == ""
   doAssert url.port == ""
+  doAssert url.path == ""
   doAssert url.paths == @[]
-  doAssert url.authority == ""
-  doAssert url.search == "name=ferret&age=12&leg=1&leg=2&leg=3&leg=4"
+  doAssert $url.query == "name=ferret&age=12&leg=1&leg=2&leg=3&leg=4"
   doAssert url.query["name"] == "ferret"
   doAssert url.query["age"] == "12"
   doAssert url.query["leg"] == "1"
@@ -51,7 +50,7 @@ block:
   doAssert "age" in url.query
   doAssert "leg" in url.query
   doAssert "eye" notin url.query
-  doAssert url.search == "name=ferret&age=12&leg=1&leg=2&leg=3&leg=4"
+  doAssert $url.query == "name=ferret&age=12&leg=1&leg=2&leg=3&leg=4"
   doAssert url.fragment == ""
   doAssert $url == test
 
@@ -69,79 +68,63 @@ block:
   doAssert $url.query == "name=&age=&legs=4"
 
 block:
+  let test = "google.com/a/path?id=3"
+  let url = parseUrl(test)
+  doAssert url.path == "google.com/a/path"
+  doAssert $url == test
+
+block:
   var url = Url()
   url.hostname = "example.com"
   url.query["q"] = "foo"
   url.fragment = "heading1"
-  doAssert $url == "example.com?q=foo#heading1"
+
+  let parsed = parseUrl($url)
+  doAssert url == parsed
+
+  doAssert $url == "//example.com?q=foo#heading1"
 
 block:
   var url = Url()
+  url.scheme = "https"
   url.hostname = "example.com"
   url.query["site"] = "https://nim-lang.org"
   url.query["https://nim-lang.org"] = "nice!!!"
   url.query["nothing"] = ""
   url.query["unicode"] = "шеллы"
   url.query["specials"] = "\n\t\b\r\"+&="
-  doAssert $url == "example.com?site=https%3A%2F%2Fnim-lang.org&https%3A%2F%2Fnim-lang.org=nice!!!&nothing=&unicode=%D1%88%D0%B5%D0%BB%D0%BB%D1%8B&specials=%0A%09%08%0D%22%2B%26%3D"
+  doAssert $url == "https://example.com?site=https%3A%2F%2Fnim-lang.org&https%3A%2F%2Fnim-lang.org=nice%21%21%21&nothing=&unicode=%D1%88%D0%B5%D0%BB%D0%BB%D1%8B&specials=%0A%09%08%0D%22%2B%26%3D"
   doAssert $parseUrl($url) == $url
 
 block:
   let test = "http://localhost:8080/p2/foo+and+other+stuff"
   let url = parseUrl(test)
-  doAssert url.paths == @["p2", "foo+and+other+stuff"]
-  doAssert $url == "http://localhost:8080/p2/foo%2Band%2Bother%2Bstuff"
+  doAssert $url == "http://localhost:8080/p2/foo+and+other+stuff"
 
 block:
   let test = "http://localhost:8080/p2/foo%2Band%2Bother%2Bstuff"
   let url = parseUrl(test)
-  doAssert url.paths == @["p2", "foo+and+other+stuff"]
-  doAssert $url == "http://localhost:8080/p2/foo%2Band%2Bother%2Bstuff"
+  doAssert $url == "http://localhost:8080/p2/foo+and+other+stuff"
 
 block:
   let test = "http://localhost:8080/p2/foo%2Fand%2Fother%2Fstuff"
   let url = parseUrl(test)
-  doAssert url.paths == @["p2", "foo/and/other/stuff"]
-  doAssert $url == "http://localhost:8080/p2/foo%2Fand%2Fother%2Fstuff"
+  doAssert $url == "http://localhost:8080/p2/foo/and/other/stuff"
 
 block:
   let test = "http://localhost:8080/p2/#foo%2Band%2Bother%2Bstuff"
   let url = parseUrl(test)
-  doAssert url.paths == @["p2", ""]
-  doAssert url.fragment == "foo+and+other+stuff"
-  doAssert $url == "http://localhost:8080/p2/#foo%2Band%2Bother%2Bstuff"
+  doAssert $url == "http://localhost:8080/p2/#foo+and+other+stuff"
 
 block:
   let test = "name=&age&legs=4"
   let url = parseUrl(test)
-  doAssert $url.query == "name=&age=&legs=4"
+  doAssert url.path == "name=&age&legs=4"
 
 block:
   let test = "name=&age&legs=4&&&"
   let url = parseUrl(test)
-  doAssert $url.query == "name=&age=&legs=4&=&=&="
-
-block:
-  let test = "https://localhost:8080"
-  let url = parseUrl(test)
-  doAssert url.paths == @[]
-
-block:
-  let test = "https://localhost:8080/"
-  let url = parseUrl(test)
-  doAssert url.paths == @[""]
-
-block:
-  let test = "https://localhost:8080/&url=1"
-  let url = parseUrl(test)
-  doAssert url.paths == @[""]
-  doAssert $url.query == "url=1"
-
-block:
-  let test = "https://localhost:8080/?url=1"
-  let url = parseUrl(test)
-  doAssert url.paths == @[""]
-  doAssert $url.query == "url=1"
+  doAssert url.path == "name=&age&legs=4&&&"
 
 block:
   doAssert encodeURIComponent("-._~!*'()") == "-._~!*'()"
@@ -163,9 +146,12 @@ block:
   doAssert encodeURIComponent(set2) == "-.!~*'()"
   doAssert encodeURIComponent(set3) == "ABC%20abc%20123" # (the space gets encoded as %20)
 
+  doAssert encodeQueryComponent(" ?&=#+%!<>#\"{}|\\^[]`☺\t:/@$'()*,;") == "+%3F%26%3D%23%2B%25%21%3C%3E%23%22%7B%7D%7C%5C%5E%5B%5D%60%E2%98%BA%09%3A%2F%40%24%27%28%29%2A%2C%3B"
+
 block:
   let test = "?url=1&two=2"
   let url = parseUrl(test)
+  doAssert url.path == ""
   doAssert url.paths == @[]
   doAssert $url.query == "url=1&two=2"
 
@@ -188,14 +174,32 @@ block:
 
 block:
   var url: Url
-  url.path = "a/b%20c/d"
-  doAssert url.paths == @["a", "b c", "d"]
-  url.path = ""
+  url.path = "/"
+  echo url.paths
   doAssert url.paths == @[]
 
 block:
+  var url: Url
+  url.path = "//"
+  echo url.paths
+  doAssert url.paths == @["", ""]
+
+block:
   let url = parseUrl("?param=?")
-  doAssert $url.query == "param=?"
+  doAssert $url.query == "param=%3F"
+
+block:
+  let targetId = 399
+
+  var url: Url
+  url.scheme = "https"
+  url.hostname = "ssd.jpl.nasa.gov"
+  url.path = "/api/horizons.api"
+  url.query["format"] = "text"
+  url.query["COMMAND"] = "'" & $targetId & "'"
+  url.query["STEP_SIZE"] = "'1 d'"
+
+  doAssert $url == "https://ssd.jpl.nasa.gov/api/horizons.api?format=text&COMMAND=%27399%27&STEP_SIZE=%271+d%27"
 
 block:
   doAssertRaises CatchableError:
@@ -226,3 +230,18 @@ block:
 block:
   let url = "http://site.com#a#frag#ment"
   doAssert parseUrl(url).fragment == "a#frag#ment"
+
+block:
+  let test = "https://www.elyrics.net/read/0-9/$tupid-young,-nocap-&-steelz-lyrics/i-can_t-change-lyrics.html"
+  let url = parseUrl(test)
+  doAssert url.query.len == 0
+
+block:
+  let test = "https://website.com/%z"
+  doAssertRaises CatchableError:
+    discard parseUrl(test)
+
+block: # https://github.com/treeform/puppy/issues/100
+  let test = "https://www.**.com/list=1,2"
+  let url = parseUrl(test)
+  doAssert $url == test

@@ -1,4 +1,5 @@
-import std/parseutils, std/strutils, webby/httpheaders, webby/queryparams, webby/multipart
+import std/parseutils, std/strutils, webby/httpheaders, webby/internal,
+    webby/queryparams, webby/multipart
 
 export httpheaders, queryparams, multipart
 
@@ -9,14 +10,27 @@ export httpheaders, queryparams, multipart
 ##       https://admin:hunter1@example.com:8042/over/there?name=ferret#nose
 ##        \_/   \___/ \_____/ \_________/ \__/\_________/ \_________/ \__/
 ##         |      |       |       |        |       |          |         |
-##       scheme username password hostname port   path[s]    query fragment
+##       scheme username password hostname port   path      query   fragment
 ##
 
 type Url* = object
   scheme*, username*, password*: string
   hostname*, port*, fragment*: string
-  paths*: seq[string]
+  opaque*, path*: string
   query*: QueryParams
+
+proc paths*(url: Url): seq[string] =
+  ## Returns the path segments (path split on '/').
+  ## This returns the same path segments for both relative and absolute
+  ## paths. For example:
+  ## "/" -> @[]
+  ## "" -> @[]
+  ## "/a/b/c" -> @["a", "b", "c"]
+  ## "a/b/c" -> @["a", "b", "c"]
+  if url.path != "" and url.path != "/":
+    result = url.path.split('/')
+    if url.path.startsWith('/'):
+      result.delete(0)
 
 proc encodeURIComponent*(s: string): string =
   ## Encodes the string the same as encodeURIComponent does in the browser.
@@ -76,120 +90,173 @@ proc parseSearch*(search: string): QueryParams =
     result.add(kv)
 
 proc parseUrl*(s: string): Url =
-  ## Parses a URL or a URL into the Url object.
-  var
-    s = s
-    url: Url
+  var s = s
 
-  let hasFragment = s.find('#')
-  if hasFragment != -1:
-    url.fragment = decodeURIComponent(s[hasFragment + 1 .. ^1])
-    s = s[0 .. hasFragment - 1]
+  # Fragment
+  let fragmentIdx = s.find('#')
+  if fragmentIdx >= 0:
+    var parts = s.split('#', maxsplit = 1)
+    result.fragment = decodeURIComponent(parts[1])
+    s = move parts[0]
 
-  let hasSearch = s.find('?')
-  if hasSearch != -1:
-    let search = s[hasSearch + 1 .. ^1]
-    s = s[0 .. hasSearch - 1]
-    url.query = parseSearch(search)
-  else:
-    # Handle ? being ommitted but a search still being present
-    let hasAmpersand = s.find('&')
-    if hasAmpersand != -1:
-      let search = s[hasAmpersand + 1 .. ^1]
-      s = s[0 .. hasAmpersand - 1]
-      url.query = parseSearch(search)
+  if containsControlByte(s):
+    raise newException(CatchableError, "Invalid control character in URL")
 
-  let hasScheme = s.find("://")
-  if hasScheme != -1:
-    url.scheme = s[0 .. hasScheme - 1]
-    s = s[hasScheme + 3 .. ^1]
+  if s == "*":
+    result.path = "*"
+    return
 
-  let hasLogin = s.find('@')
-  if hasLogin != -1:
-    let login = s[0 .. hasLogin - 1]
-    let hasPassword = login.find(':')
-    if hasPassword != -1:
-      url.username = login[0 .. hasPassword - 1]
-      url.password = login[hasPassword + 1 .. ^1]
+  # Scheme
+  for i, c in s:
+    if c in {'a' .. 'z', 'A' .. 'Z'}:
+      discard
+    elif c in {'0' .. '9', '+', '-', '.'}:
+      if i == 0:
+        break
+    elif c == ':':
+      if i == 0:
+        raise newException(CatchableError, "Missing protocol scheme in URL")
+      var parts = s.split(':', maxsplit = 1)
+      result.scheme = toLowerAscii(parts[0])
+      s = move parts[1]
+      break
     else:
-      url.username = login
-    s = s[hasLogin + 1 .. ^1]
+      # Invalid character
+      break
 
-  let hasPath = s.find('/')
-  if hasPath != -1:
-    for part in s[hasPath + 1 .. ^1].split('/'):
-      url.paths.add(decodeURIComponent(part))
-    s = s[0 .. hasPath - 1]
+  # Query
+  if '?' in s:
+    if s[^1] == '?' and s.count('?') == 1:
+      # result.forceQuery = true
+      s.setLen(s.len - 1)
+    else:
+      var parts = s.split('?', maxsplit = 1)
+      result.query = parseSearch(parts[1])
+      s = move parts[0]
 
-  let hasPort = s.find(':')
-  if hasPort != -1:
-    url.port = s[hasPort + 1 .. ^1]
-    s = s[0 .. hasPort - 1]
+  # Opaque
+  if not s.startsWith('/') and result.scheme != "":
+    # Consider rootless paths per RFC 3986 as opaque
+    result.opaque = move s
 
-  if hasSearch == -1 and ("&" in s) or ("=" in s):
-    # Probably search without ?, append to query
-    let prev = url.query # In case we already got from handling ommitted ?
-    url.query = parseSearch(s)
-    url.query.add(prev)
-    s = ""
+  # Relative URL must not have a colon in the first path segment
+  if ':' in s and s.find(':') < s.find('/'):
+    raise newException(
+      CatchableError,
+      "First path segment in URL cannot contain colon"
+    )
 
-  url.hostname = s
-  return url
+  if (result.scheme != "" or not s.startsWith("///")) and s.startsWith("//"):
+    s = s[2 .. ^1] # Trim off leading //
 
-proc host*(url: Url): string =
-  ## Returns the hostname and port part of the URL as a string.
-  ## Example: "example.com:8042"
-  url.hostname & ":" & url.port
+    # Authority
+    let atIdx = s.rfind('@', last = s.find('/')) # Find last @ before any /
+    if atIdx >= 0:
+      var authority = s[0 ..< atIdx]
+      s = s[atIdx + 1 .. ^1]
+      for c in authority: # Validate
+        if c in {
+          'a' .. 'z',
+          'A' .. 'Z',
+          '0' .. '9',
+          '-', '.', '_', ':', '~', '!', '$', '&', '\'', '(', ')', '*', '+',
+          ',', ';', '=', '%', '@'
+        }:
+          discard
+        else:
+          raise newException(
+            CatchableError,
+            "Invalid character in URL authority"
+          )
+      var parts = authority.split(':', maxsplit = 1)
+      result.username = decodeURIComponent(parts[0])
+      if parts.len > 1:
+        result.password = decodeURIComponent(parts[1])
 
-proc search*(url: Url): string =
-  ## Returns the search part of the URL as a string.
-  ## Example: "name=ferret&age=12&legs=4"
-  $url.query
+    # Host
+    var host: string
+    let fsIdx = s.find('/')
+    if fsIdx >= 0:
+      host = s[0 ..< fsIdx]
+      s = s[fsIdx .. ^1]
+    else:
+      host = move s
+    if host.startsWith('['):
+      let closingIdx = host.find(']')
+      if closingIdx < 0:
+        raise newException(CatchableError, "Missing ']' in URL host")
+      result.hostname = host[0 .. closingIdx]
+      let zoneIdentifierIdx = result.hostname.find("%25")
+      if zoneIdentifierIdx >= 0:
+        var
+          host1 = result.hostname[0 ..< zoneIdentifierIdx]
+          host2 = result.hostname[zoneIdentifierIdx .. ^1]
+        result.hostname = host1 & decodeURIComponent(host2)
+      if host.len > closingIdx + 2 and host[closingIdx + 1] == ':':
+        result.port = host[closingIdx + 2 .. ^1]
+    else:
+      var parts = host.rsplit(':', maxsplit = 1)
+      result.hostname = decodeURIComponent(parts[0])
+      if parts.len > 1:
+        result.port = move parts[1]
+    for c in result.port:
+      if c notin {'0' .. '9'}:
+        raise newException(
+          CatchableError,
+          "Invalid port `" & result.port & "` after URL host"
+        )
 
-proc path*(url: Url): string =
-  ## Returns the paths combined into a single path string.
-  ## @["foo", "bar"] -> "/foo/bar"
-  for part in url.paths:
-    result.add '/'
-    result.add encodeURIComponent(part)
-
-proc `path=`*(url: var Url, s: string) =
-  if s == "":
-    url.paths.setLen(0)
-  elif s[0] == '/':
-    url.paths = s.split('/')[1 .. ^1]
-  else:
-    url.paths = s.split('/')
-
-  # We encodeURIComponent on the way out so decode on the way in
-  for path in url.paths.mitems:
-    path = decodeURIComponent(path)
-
-proc authority*(url: Url): string =
-  ## Returns the authority part of URL as a string.
-  ## Example: "admin:hunter1@example.com:8042"
-  if url.username.len > 0:
-    result.add url.username
-    if url.password.len > 0:
-      result.add ':'
-      result.add url.password
-    result.add '@'
-  if url.hostname.len > 0:
-    result.add url.hostname
-  if url.port.len > 0:
-    result.add ':'
-    result.add url.port
+  # Path
+  result.path = decodeURIComponent(s)
 
 proc `$`*(url: Url): string =
   ## Turns Url into a string. Preserves query string param ordering.
-  if url.scheme.len > 0:
+  if url.scheme != "":
     result.add url.scheme
-    result.add "://"
-  result.add url.authority
-  result.add url.path
+    result.add ':'
+  if url.opaque != "":
+    result.add url.opaque
+  else:
+    if url.scheme != "" or url.hostname != "" or url.port != "" or url.username != "":
+      if url.hostname != "" or url.port != "" or url.path != "" or url.username != "":
+        result.add "//"
+      result.add escape(url.username, EncodeUsernamePassword)
+      if url.password != "":
+        result.add ':'
+        result.add escape(url.password, EncodeUsernamePassword)
+      if url.username != "" or url.password != "":
+        result.add '@'
+      if url.hostname != "":
+        result.add escape(url.hostname, EncodeHost)
+      if url.port != "":
+        result.add ':'
+        result.add url.port
+
+    var encodedPath: string
+    if url.path == "*":
+      encodedPath = "*" # don't escape (go issue 11202)
+    else:
+      encodedPath = escape(url.path, EncodePath)
+
+    if encodedPath != "" and encodedPath[0] != '/' and (url.hostname != "" or url.port != ""):
+      result.add '/'
+
+    if result != "":
+      # RFC 3986 §4.2
+      # A path segment that contains a colon character (e.g., "this:that")
+      # cannot be used as the first segment of a relative-path reference, as
+      # it would be mistaken for a scheme name. Such a segment must be
+      # preceded by a dot-segment (e.g., "./this:that") to make a relative-
+      # path reference.
+      if ':' in encodedPath and encodedPath.find(':') < encodedPath.find('/'):
+        result.add "./"
+
+    result.add encodedPath
+
   if url.query.len > 0:
     result.add '?'
-    result.add url.search
-  if url.fragment.len > 0:
+    result.add $url.query
+
+  if url.fragment != "":
     result.add '#'
-    result.add encodeURIComponent(url.fragment)
+    result.add escape(url.fragment, EncodeFragment)
