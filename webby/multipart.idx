@@ -1,2 +1,3 @@
-MultipartEntry	webby/multipart.html#MultipartEntry	multipart: MultipartEntry	
-encodeMultipart	webby/multipart.html#encodeMultipart,seq[MultipartEntry]	multipart: encodeMultipart(entries: seq[MultipartEntry]): (string, string)	
+nimTitle	multipart	webby/multipart.html	module src/webby/multipart		0
+nim	MultipartEntry	webby/multipart.html#MultipartEntry	object MultipartEntry		4
+nim	encodeMultipart	webby/multipart.html#encodeMultipart,seq[MultipartEntry]	proc encodeMultipart(entries: seq[MultipartEntry]): (string, string)		16

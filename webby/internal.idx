@@ -1,0 +1,12 @@
+nimTitle	internal	webby/internal.html	module src/webby/internal		0
+nim	EncodePath	webby/internal.html#EncodePath	EncodeMode.EncodePath		3
+nim	EncodePathSegment	webby/internal.html#EncodePathSegment	EncodeMode.EncodePathSegment		3
+nim	EncodeHost	webby/internal.html#EncodeHost	EncodeMode.EncodeHost		3
+nim	EncodeZone	webby/internal.html#EncodeZone	EncodeMode.EncodeZone		3
+nim	EncodeUsernamePassword	webby/internal.html#EncodeUsernamePassword	EncodeMode.EncodeUsernamePassword		3
+nim	EncodeQueryComponent	webby/internal.html#EncodeQueryComponent	EncodeMode.EncodeQueryComponent		3
+nim	EncodeFragment	webby/internal.html#EncodeFragment	EncodeMode.EncodeFragment		3
+nim	EncodeMode	webby/internal.html#EncodeMode	enum EncodeMode		3
+nim	shouldEscape	webby/internal.html#shouldEscape,char,EncodeMode	proc shouldEscape(c: char; mode: EncodeMode): bool		7
+nim	escape	webby/internal.html#escape,string,EncodeMode	proc escape(s: string; mode: EncodeMode): string		82
+nim	containsControlByte	webby/internal.html#containsControlByte,string	proc containsControlByte(s: string): bool		113

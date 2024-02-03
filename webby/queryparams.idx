@@ -1,12 +1,14 @@
-QueryParams	webby/queryparams.html#QueryParams	queryparams: QueryParams	
-toBase	webby/queryparams.html#toBase.c,QueryParams	queryparams: toBase(params: var QueryParams): var seq[(string, string)]	
-toBase	webby/queryparams.html#toBase.c,QueryParams_2	queryparams: toBase(params: QueryParams): lent seq[(string, string)]	
-encodeQueryComponent	webby/queryparams.html#encodeQueryComponent,string	queryparams: encodeQueryComponent(s: string): string	
-decodeQueryComponent	webby/queryparams.html#decodeQueryComponent,string	queryparams: decodeQueryComponent(s: string): string	
-`[]`	webby/queryparams.html#[],QueryParams,string	queryparams: `[]`(query: QueryParams; key: string): string	
-`[]=`	webby/queryparams.html#[]=,QueryParams,string,string	queryparams: `[]=`(query: var QueryParams; key, value: string)	
-contains	webby/queryparams.html#contains,QueryParams,string	queryparams: contains(query: QueryParams; key: string): bool	
-add	webby/queryparams.html#add,QueryParams,QueryParams	queryparams: add(query: var QueryParams; params: QueryParams)	
-getOrDefault	webby/queryparams.html#getOrDefault,QueryParams,string,string	queryparams: getOrDefault(query: QueryParams; key, default: string): string	
-`$`	webby/queryparams.html#$,QueryParams	queryparams: `$`(query: QueryParams): string	
-emptyQueryParams	webby/queryparams.html#emptyQueryParams	queryparams: emptyQueryParams(): QueryParams	
+nimTitle	queryparams	webby/queryparams.html	module src/webby/queryparams		0
+nim	QueryParams	webby/queryparams.html#QueryParams	type QueryParams		3
+nim	toBase	webby/queryparams.html#toBase.c,QueryParams	converter toBase(params: var QueryParams): var seq[(string, string)]		5
+nim	toBase	webby/queryparams.html#toBase.c,QueryParams_2	converter toBase(params: QueryParams): lent seq[(string, string)]		9
+nim	encodeQueryComponent	webby/queryparams.html#encodeQueryComponent,string	proc encodeQueryComponent(s: string): string		15
+nim	decodeQueryComponent	webby/queryparams.html#decodeQueryComponent,string	proc decodeQueryComponent(s: string): string		21
+nim	`[]`	webby/queryparams.html#[],QueryParams,string	proc `[]`(query: QueryParams; key: string): string		44
+nim	`[]=`	webby/queryparams.html#[]=,QueryParams,string,string	proc `[]=`(query: var QueryParams; key, value: string)		51
+nim	contains	webby/queryparams.html#contains,QueryParams,string	proc contains(query: QueryParams; key: string): bool		60
+nim	add	webby/queryparams.html#add,QueryParams,QueryParams	proc add(query: var QueryParams; params: QueryParams)		67
+nim	getOrDefault	webby/queryparams.html#getOrDefault,QueryParams,string,string	proc getOrDefault(query: QueryParams; key, default: string): string		71
+nim	`$`	webby/queryparams.html#$,QueryParams	proc `$`(query: QueryParams): string		74
+nim	emptyQueryParams	webby/queryparams.html#emptyQueryParams	proc emptyQueryParams(): QueryParams		82
+nimgrp	tobase	webby/queryparams.html#toBase-converters-all	converter		5
