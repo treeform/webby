@@ -49,7 +49,7 @@ proc `[]`*(query: QueryParams, key: string): string =
       return v
 
 proc `[]=`*(query: var QueryParams, key, value: string) =
-  ## Sets the value for the key in url.query. If the key is present, this
+  ## Sets the value for the key in url.query. If the key is not present, this
   ## appends a new key-value pair to the end.
   for pair in query.mitems:
     if pair[0] == key:
