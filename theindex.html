@@ -21,12 +21,12 @@
   <div class="document" id="documentId">
     <div class="container">
       <h1 class="title">Index</h1>
-      Modules: <a href="webby.html">webby</a>, <a href="webby/httpheaders.html">webby/httpheaders</a>, <a href="webby/internal.html">webby/internal</a>, <a href="webby/multipart.html">webby/multipart</a>, <a href="webby/queryparams.html">webby/queryparams</a>.<br/><p /><h2>API symbols</h2>
+      Modules: <a href="webby.html">webby</a>, <a href="webby/httpheaders.html">webby/httpheaders</a>, <a href="webby/internal.html">webby/internal</a>, <a href="webby/multipart.html">webby/multipart</a>, <a href="webby/queryparams.html">webby/queryparams</a>, <a href="webby/urls.html">webby/urls</a>.<br/><p /><h2>API symbols</h2>
 <dl><dt><a name="%60%24%60" href="#%60%24%60"><span>`$`:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="webby: proc `$`(url: Url): string" href="webby.html#%24%2CUrl">webby: proc `$`(url: Url): string</a></li>
-          <li><a class="reference external"
           data-doc-search-tag="queryparams: proc `$`(query: QueryParams): string" href="webby/queryparams.html#%24%2CQueryParams">queryparams: proc `$`(query: QueryParams): string</a></li>
+          <li><a class="reference external"
+          data-doc-search-tag="urls: proc `$`(url: Url): string" href="webby/urls.html#%24%2CUrl">urls: proc `$`(url: Url): string</a></li>
           </ul></dd>
 <dt><a name="%60%5B%5D%3D%60" href="#%60%5B%5D%3D%60"><span>`[]=`:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -60,7 +60,7 @@
           </ul></dd>
 <dt><a name="decodeURIComponent" href="#decodeURIComponent"><span>decodeURIComponent:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="webby: proc decodeURIComponent(s: string): string" href="webby.html#decodeURIComponent%2Cstring">webby: proc decodeURIComponent(s: string): string</a></li>
+          data-doc-search-tag="urls: proc decodeURIComponent(s: string): string" href="webby/urls.html#decodeURIComponent%2Cstring">urls: proc decodeURIComponent(s: string): string</a></li>
           </ul></dd>
 <dt><a name="emptyHttpHeaders" href="#emptyHttpHeaders"><span>emptyHttpHeaders:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -104,11 +104,11 @@
           </ul></dd>
 <dt><a name="encodeURI" href="#encodeURI"><span>encodeURI:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="webby: proc encodeURI(s: string): string" href="webby.html#encodeURI%2Cstring">webby: proc encodeURI(s: string): string</a></li>
+          data-doc-search-tag="urls: proc encodeURI(s: string): string" href="webby/urls.html#encodeURI%2Cstring">urls: proc encodeURI(s: string): string</a></li>
           </ul></dd>
 <dt><a name="encodeURIComponent" href="#encodeURIComponent"><span>encodeURIComponent:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="webby: proc encodeURIComponent(s: string): string" href="webby.html#encodeURIComponent%2Cstring">webby: proc encodeURIComponent(s: string): string</a></li>
+          data-doc-search-tag="urls: proc encodeURIComponent(s: string): string" href="webby/urls.html#encodeURIComponent%2Cstring">urls: proc encodeURIComponent(s: string): string</a></li>
           </ul></dd>
 <dt><a name="EncodeUsernamePassword" href="#EncodeUsernamePassword"><span>EncodeUsernamePassword:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -136,15 +136,15 @@
           </ul></dd>
 <dt><a name="parseSearch" href="#parseSearch"><span>parseSearch:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="webby: proc parseSearch(search: string): QueryParams" href="webby.html#parseSearch%2Cstring">webby: proc parseSearch(search: string): QueryParams</a></li>
+          data-doc-search-tag="urls: proc parseSearch(search: string): QueryParams" href="webby/urls.html#parseSearch%2Cstring">urls: proc parseSearch(search: string): QueryParams</a></li>
           </ul></dd>
 <dt><a name="parseUrl" href="#parseUrl"><span>parseUrl:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="webby: proc parseUrl(s: string): Url" href="webby.html#parseUrl%2Cstring">webby: proc parseUrl(s: string): Url</a></li>
+          data-doc-search-tag="urls: proc parseUrl(s: string): Url" href="webby/urls.html#parseUrl%2Cstring">urls: proc parseUrl(s: string): Url</a></li>
           </ul></dd>
 <dt><a name="paths" href="#paths"><span>paths:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="webby: proc paths(url: Url): seq[string]" href="webby.html#paths%2CUrl">webby: proc paths(url: Url): seq[string]</a></li>
+          data-doc-search-tag="urls: proc paths(url: Url): seq[string]" href="webby/urls.html#paths%2CUrl">urls: proc paths(url: Url): seq[string]</a></li>
           </ul></dd>
 <dt><a name="QueryParams" href="#QueryParams"><span>QueryParams:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -170,13 +170,13 @@
           </ul></dd>
 <dt><a name="Url" href="#Url"><span>Url:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="webby: object Url" href="webby.html#Url">webby: object Url</a></li>
+          data-doc-search-tag="urls: object Url" href="webby/urls.html#Url">urls: object Url</a></li>
           </ul></dd>
 </dl>
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2024-02-03 00:52:02 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2024-02-09 00:53:46 UTC</small>
       </div>
     </div>
   </div>

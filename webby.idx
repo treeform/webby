@@ -1,9 +1,1 @@
 nimTitle	webby	webby.html	module src/webby		0
-nim	Url	webby.html#Url	object Url		16
-nim	paths	webby.html#paths,Url	proc paths(url: Url): seq[string]		22
-nim	encodeURIComponent	webby.html#encodeURIComponent,string	proc encodeURIComponent(s: string): string		35
-nim	decodeURIComponent	webby.html#decodeURIComponent,string	proc decodeURIComponent(s: string): string		47
-nim	encodeURI	webby.html#encodeURI,string	proc encodeURI(s: string): string		67
-nim	parseSearch	webby.html#parseSearch,string	proc parseSearch(search: string): QueryParams		79
-nim	parseUrl	webby.html#parseUrl,string	proc parseUrl(s: string): Url		92
-nim	`$`	webby.html#$,Url	proc `$`(url: Url): string		212

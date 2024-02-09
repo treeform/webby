@@ -1,0 +1,9 @@
+nimTitle	urls	webby/urls.html	module src/webby/urls		0
+nim	Url	webby/urls.html#Url	object Url		15
+nim	paths	webby/urls.html#paths,Url	proc paths(url: Url): seq[string]		21
+nim	encodeURIComponent	webby/urls.html#encodeURIComponent,string	proc encodeURIComponent(s: string): string		34
+nim	decodeURIComponent	webby/urls.html#decodeURIComponent,string	proc decodeURIComponent(s: string): string		46
+nim	encodeURI	webby/urls.html#encodeURI,string	proc encodeURI(s: string): string		66
+nim	parseSearch	webby/urls.html#parseSearch,string	proc parseSearch(search: string): QueryParams		78
+nim	parseUrl	webby/urls.html#parseUrl,string	proc parseUrl(s: string): Url		91
+nim	`$`	webby/urls.html#$,Url	proc `$`(url: Url): string		211
