@@ -1,4 +1,4 @@
-import std/parseutils, std/strutils, webby/internal, webby/queryparams
+import std/parseutils, std/strutils, internal, queryparams
 
 export queryparams
 
