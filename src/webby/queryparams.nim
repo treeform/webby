@@ -72,7 +72,7 @@ proc getOrDefault*(query: QueryParams, key, default: string): string =
   if key in query: query[key] else: default
 
 proc getAll*(query: QueryParams, key: string): seq[string] =
-  for (k, v) in params:
+  for (k, v) in query:
     if k == key:
       result.add(v)
 
