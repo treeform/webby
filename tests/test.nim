@@ -46,6 +46,8 @@ block:
   doAssert url.query["name"] == "ferret"
   doAssert url.query["age"] == "12"
   doAssert url.query["leg"] == "1"
+  doAssert url.query.getAll("leg") == @["1", "2", "3", "4"]
+  doAssert url.query.getAll("eye") == @[]
   doAssert "name" in url.query
   doAssert "age" in url.query
   doAssert "leg" in url.query
