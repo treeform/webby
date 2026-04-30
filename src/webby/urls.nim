@@ -128,10 +128,7 @@ proc parseUrl*(s: string): Url =
       if i == 0:
         raise newException(CatchableError, "Missing protocol scheme in URL")
       result.scheme = toLowerAscii(s[0 ..< i])
-      when NimMajor > 1 or (NimMajor == 1 and NimMinor >= 6):
-        s.delete(0 .. i)
-      else:
-        s.delete(0, i)
+      s.delete(0 .. i)
       break
     else:
       # Invalid character
