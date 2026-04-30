@@ -5,12 +5,8 @@ type HttpHeaders* = distinct seq[(string, string)]
 converter toBase*(headers: var HttpHeaders): var seq[(string, string)] =
   headers.distinctBase
 
-when (NimMajor, NimMinor, NimPatch) >= (1, 4, 8):
-  converter toBase*(params: HttpHeaders): lent seq[(string, string)] =
-    params.distinctBase
-else: # Older versions
-  converter toBase*(params: HttpHeaders): seq[(string, string)] =
-    params.distinctBase
+converter toBase*(params: HttpHeaders): lent seq[(string, string)] =
+  params.distinctBase
 
 converter toWebby*(headers: seq[(string, string)]): HttpHeaders =
   headers.HttpHeaders

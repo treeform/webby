@@ -70,6 +70,13 @@ block:
   doAssert $url.query == "name=&age=&legs=4"
 
 block:
+  let params = parseSearch("a=1&&b=2&")
+  var pairs: seq[(string, string)]
+  for pair in params:
+    pairs.add(pair)
+  doAssert pairs == @[("a", "1"), ("", ""), ("b", "2"), ("", "")]
+
+block:
   let test = "google.com/a/path?id=3"
   let url = parseUrl(test)
   doAssert url.path == "google.com/a/path"
