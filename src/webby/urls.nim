@@ -78,15 +78,28 @@ proc encodeURI*(s: string): string =
 proc parseSearch*(search: string): QueryParams =
   ## Parses the search part into strings pairs
   ## ``"name=&age&legs=4" -> @[("name", ""), ("age", ""), ("legs", "4")]``
-  for pairStr in search.split('&'):
+  var pairStart = 0
+  while true:
     let
-      pair = pairStr.split('=', 1)
+      pairEndFind = search.find('&', start = pairStart)
+      pairEnd =
+        if pairEndFind >= 0: pairEndFind
+        else: search.len
+      eqIdx =
+        if pairEnd <= pairStart: -1
+        else: search.find('=', start = pairStart, last = pairEnd - 1)
       kv =
-        if pair.len == 2:
-          (decodeQueryComponent(pair[0]), decodeQueryComponent(pair[1]))
+        if eqIdx >= 0:
+          (
+            decodeQueryComponent(search[pairStart ..< eqIdx]),
+            decodeQueryComponent(search[eqIdx + 1 ..< pairEnd])
+          )
         else:
-          (decodeQueryComponent(pair[0]), "")
+          (decodeQueryComponent(search[pairStart ..< pairEnd]), "")
     result.add(kv)
+    if pairEnd == search.len:
+      break
+    pairStart = pairEnd + 1
 
 proc parseUrl*(s: string): Url =
   var s = s
@@ -94,9 +107,8 @@ proc parseUrl*(s: string): Url =
   # Fragment
   let fragmentIdx = s.find('#')
   if fragmentIdx >= 0:
-    var parts = s.split('#', maxsplit = 1)
-    result.fragment = decodeURIComponent(parts[1])
-    s = move parts[0]
+    result.fragment = decodeURIComponent(s[fragmentIdx + 1 .. ^1])
+    s.setLen(fragmentIdx)
 
   if containsControlByte(s):
     raise newException(CatchableError, "Invalid control character in URL")
@@ -115,23 +127,25 @@ proc parseUrl*(s: string): Url =
     elif c == ':':
       if i == 0:
         raise newException(CatchableError, "Missing protocol scheme in URL")
-      var parts = s.split(':', maxsplit = 1)
-      result.scheme = toLowerAscii(parts[0])
-      s = move parts[1]
+      result.scheme = toLowerAscii(s[0 ..< i])
+      when NimMajor > 1 or (NimMajor == 1 and NimMinor >= 6):
+        s.delete(0 .. i)
+      else:
+        s.delete(0, i)
       break
     else:
       # Invalid character
       break
 
   # Query
-  if '?' in s:
-    if s[^1] == '?' and s.count('?') == 1:
+  let queryIdx = s.find('?')
+  if queryIdx >= 0:
+    if queryIdx == s.high:
       # result.forceQuery = true
-      s.setLen(s.len - 1)
+      discard
     else:
-      var parts = s.split('?', maxsplit = 1)
-      result.query = parseSearch(parts[1])
-      s = move parts[0]
+      result.query = parseSearch(s[queryIdx + 1 .. ^1])
+    s.setLen(queryIdx)
 
   # Opaque
   if not s.startsWith('/') and result.scheme != "":
@@ -167,10 +181,12 @@ proc parseUrl*(s: string): Url =
             CatchableError,
             "Invalid character in URL authority"
           )
-      var parts = authority.split(':', maxsplit = 1)
-      result.username = decodeURIComponent(parts[0])
-      if parts.len > 1:
-        result.password = decodeURIComponent(parts[1])
+      let colonIdx = authority.find(':')
+      if colonIdx >= 0:
+        result.username = decodeURIComponent(authority[0 ..< colonIdx])
+        result.password = decodeURIComponent(authority[colonIdx + 1 .. ^1])
+      else:
+        result.username = decodeURIComponent(authority)
 
     # Host
     var host: string
@@ -194,10 +210,12 @@ proc parseUrl*(s: string): Url =
       if host.len > closingIdx + 2 and host[closingIdx + 1] == ':':
         result.port = host[closingIdx + 2 .. ^1]
     else:
-      var parts = host.rsplit(':', maxsplit = 1)
-      result.hostname = decodeURIComponent(parts[0])
-      if parts.len > 1:
-        result.port = move parts[1]
+      let colonIdx = host.rfind(':')
+      if colonIdx >= 0:
+        result.hostname = decodeURIComponent(host[0 ..< colonIdx])
+        result.port = host[colonIdx + 1 .. ^1]
+      else:
+        result.hostname = decodeURIComponent(host)
     for c in result.port:
       if c notin {'0' .. '9'}:
         raise newException(
