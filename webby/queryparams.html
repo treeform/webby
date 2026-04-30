@@ -99,6 +99,10 @@
   <li><a class="reference" href="#encodeQueryComponent%2Cstring" title="encodeQueryComponent(s: string): string">encodeQueryComponent(s: string): string</a></li>
 
 </ul>
+<ul class="simple nested-toc-section">getAll
+  <li><a class="reference" href="#getAll%2CQueryParams%2Cstring" title="getAll(query: QueryParams; key: string): seq[string]">getAll(query: QueryParams; key: string): seq[string]</a></li>
+
+</ul>
 <ul class="simple nested-toc-section">getOrDefault
   <li><a class="reference" href="#getOrDefault%2CQueryParams%2Cstring%2Cstring" title="getOrDefault(query: QueryParams; key, default: string): string">getOrDefault(query: QueryParams; key, default: string): string</a></li>
 
@@ -162,8 +166,8 @@
   <dd>
     
     
-    <a href="https://github.com/treeform/webby/tree/master/src/webby/queryparams.nim#L74" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/treeform/webby/edit/devel/src/webby/queryparams.nim#L74" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/treeform/webby/tree/master/src/webby/queryparams.nim#L79" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/treeform/webby/edit/devel/src/webby/queryparams.nim#L79" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -245,8 +249,8 @@
   <dd>
     
     
-    <a href="https://github.com/treeform/webby/tree/master/src/webby/queryparams.nim#L82" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/treeform/webby/edit/devel/src/webby/queryparams.nim#L82" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/treeform/webby/tree/master/src/webby/queryparams.nim#L87" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/treeform/webby/edit/devel/src/webby/queryparams.nim#L87" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -260,6 +264,20 @@
     Similar to encodeURIComponent, however query parameter spaces should be +, not %20 like encodeURIComponent would encode them. The encoded string is in the x-www-form-urlencoded format.
     <a href="https://github.com/treeform/webby/tree/master/src/webby/queryparams.nim#L15" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
 <a href="https://github.com/treeform/webby/edit/devel/src/webby/queryparams.nim#L15" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+
+  </dd>
+</div>
+
+</div>
+<div id="getAll-procs-all">
+  <div id="getAll,QueryParams,string">
+  <dt><pre><span class="Keyword">proc</span> <a href="#getAll%2CQueryParams%2Cstring"><span class="Identifier">getAll</span></a><span class="Other">(</span><span class="Identifier">query</span><span class="Other">:</span> <a href="queryparams.html#QueryParams"><span class="Identifier">QueryParams</span></a><span class="Other">;</span> <span class="Identifier">key</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">string</span><span class="Other">]</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
+    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dd>
+    
+    
+    <a href="https://github.com/treeform/webby/tree/master/src/webby/queryparams.nim#L74" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/treeform/webby/edit/devel/src/webby/queryparams.nim#L74" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -320,7 +338,7 @@
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2026-04-30 04:45:54 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2026-04-30 04:48:37 UTC</small>
       </div>
     </div>
   </div>

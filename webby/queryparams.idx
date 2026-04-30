@@ -9,6 +9,7 @@ nim	`[]=`	webby/queryparams.html#[]=,QueryParams,string,string	proc `[]=`(query:
 nim	contains	webby/queryparams.html#contains,QueryParams,string	proc contains(query: QueryParams; key: string): bool		60
 nim	add	webby/queryparams.html#add,QueryParams,QueryParams	proc add(query: var QueryParams; params: QueryParams)		67
 nim	getOrDefault	webby/queryparams.html#getOrDefault,QueryParams,string,string	proc getOrDefault(query: QueryParams; key, default: string): string		71
-nim	`$`	webby/queryparams.html#$,QueryParams	proc `$`(query: QueryParams): string		74
-nim	emptyQueryParams	webby/queryparams.html#emptyQueryParams	proc emptyQueryParams(): QueryParams		82
+nim	getAll	webby/queryparams.html#getAll,QueryParams,string	proc getAll(query: QueryParams; key: string): seq[string]		74
+nim	`$`	webby/queryparams.html#$,QueryParams	proc `$`(query: QueryParams): string		79
+nim	emptyQueryParams	webby/queryparams.html#emptyQueryParams	proc emptyQueryParams(): QueryParams		87
 nimgrp	tobase	webby/queryparams.html#toBase-converters-all	converter		5
