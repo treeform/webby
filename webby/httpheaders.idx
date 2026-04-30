@@ -1,10 +1,10 @@
 nimTitle	httpheaders	webby/httpheaders.html	module src/webby/httpheaders		0
 nim	HttpHeaders	webby/httpheaders.html#HttpHeaders	type HttpHeaders		3
 nim	toBase	webby/httpheaders.html#toBase.c,HttpHeaders	converter toBase(headers: var HttpHeaders): var seq[(string, string)]		5
-nim	toBase	webby/httpheaders.html#toBase.c,HttpHeaders_2	converter toBase(params: HttpHeaders): lent seq[(string, string)]		9
-nim	toWebby	webby/httpheaders.html#toWebby.c,seq[]	converter toWebby(headers: seq[(string, string)]): HttpHeaders		15
-nim	contains	webby/httpheaders.html#contains,HttpHeaders,string	proc contains(headers: HttpHeaders; key: string): bool		18
-nim	`[]`	webby/httpheaders.html#[],HttpHeaders,string	proc `[]`(headers: HttpHeaders; key: string): string		24
-nim	`[]=`	webby/httpheaders.html#[]=,HttpHeaders,string,string	proc `[]=`(headers: var HttpHeaders; key, value: string)		30
-nim	emptyHttpHeaders	webby/httpheaders.html#emptyHttpHeaders	proc emptyHttpHeaders(): HttpHeaders		40
+nim	toBase	webby/httpheaders.html#toBase.c,HttpHeaders_2	converter toBase(params: HttpHeaders): lent seq[(string, string)]		8
+nim	toWebby	webby/httpheaders.html#toWebby.c,seq[]	converter toWebby(headers: seq[(string, string)]): HttpHeaders		11
+nim	contains	webby/httpheaders.html#contains,HttpHeaders,string	proc contains(headers: HttpHeaders; key: string): bool		14
+nim	`[]`	webby/httpheaders.html#[],HttpHeaders,string	proc `[]`(headers: HttpHeaders; key: string): string		20
+nim	`[]=`	webby/httpheaders.html#[]=,HttpHeaders,string,string	proc `[]=`(headers: var HttpHeaders; key, value: string)		26
+nim	emptyHttpHeaders	webby/httpheaders.html#emptyHttpHeaders	proc emptyHttpHeaders(): HttpHeaders		36
 nimgrp	tobase	webby/httpheaders.html#toBase-converters-all	converter		5
