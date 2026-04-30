@@ -3,22 +3,22 @@ on:
   push:
     branches:
       - master
+  workflow_dispatch:
+permissions:
+  contents: write
 env:
-  nim-version: 'stable'
-  nim-src: src/${{ github.event.repository.name }}.nim
+  nim-src: src/webby.nim
   deploy-dir: .gh-pages
 jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: jiro4989/setup-nim-action@v2
-        with:
-          nim-version: ${{ env.nim-version }}
-      - run: nimble install -Y
-      - run: nimble doc --index:on --project --git.url:https://github.com/${{ github.repository }} --git.commit:master  --out:${{ env.deploy-dir }} ${{ env.nim-src }}
-      - name: "Copy to index.html"
-        run: cp ${{ env.deploy-dir }}/${{ github.event.repository.name }}.html ${{ env.deploy-dir }}/index.html
+      - uses: actions/checkout@v5
+      - uses: treeform/setup-nim-action@v6
+      - run: nimby install -g
+      - run: nim doc --index:on --project --git.url:https://github.com/${{ github.repository }} --git.commit:master  --out:${{ env.deploy-dir }} ${{ env.nim-src }}
+      - name: Copy to index.html
+        run: cp ${{ env.deploy-dir }}/webby.html ${{ env.deploy-dir }}/index.html
       - name: Deploy documents
         uses: peaceiris/actions-gh-pages@v3
         with:

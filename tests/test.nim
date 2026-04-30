@@ -175,13 +175,11 @@ block:
 block:
   var url: Url
   url.path = "/"
-  echo url.paths
   doAssert url.paths == @[]
 
 block:
   var url: Url
   url.path = "//"
-  echo url.paths
   doAssert url.paths == @["", ""]
 
 block:
