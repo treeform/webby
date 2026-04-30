@@ -1,14 +1,22 @@
-# Webby
+<img src="docs/webbyBanner.png">
 
-`nimble install webby`
+# Webby - Common HTTP data structures and functionality.
+
+`nimby install webby`
 
 ![Github Actions](https://github.com/treeform/webby/workflows/Github%20Actions/badge.svg)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/treeform/webby)
+![GitHub Repo stars](https://img.shields.io/github/stars/treeform/webby)
+![GitHub](https://img.shields.io/github/license/treeform/webby)
+![GitHub issues](https://img.shields.io/github/issues/treeform/webby)
 
 [API reference](https://treeform.github.io/webby)
 
-This library has no dependencies other than the Nim standard library.
+## About
 
 Webby is a collection of common HTTP data structures and functionality. This includes things like `Url`, `HttpHeaders` and `QueryParams`.
+
+This library has no dependencies other than the Nim standard library.
 
 ## URL
 

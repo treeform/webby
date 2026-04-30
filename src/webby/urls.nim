@@ -22,10 +22,10 @@ proc paths*(url: Url): seq[string] =
   ## Returns the path segments (path split on '/').
   ## This returns the same path segments for both relative and absolute
   ## paths. For example:
-  ## "/" -> @[]
-  ## "" -> @[]
-  ## "/a/b/c" -> @["a", "b", "c"]
-  ## "a/b/c" -> @["a", "b", "c"]
+  ## ``"/" -> @[]``
+  ## ``"" -> @[]``
+  ## ``"/a/b/c" -> @["a", "b", "c"]``
+  ## ``"a/b/c" -> @["a", "b", "c"]``
   if url.path != "" and url.path != "/":
     result = url.path.split('/')
     if url.path.startsWith('/'):
@@ -77,7 +77,7 @@ proc encodeURI*(s: string): string =
 
 proc parseSearch*(search: string): QueryParams =
   ## Parses the search part into strings pairs
-  ## "name=&age&legs=4" -> @[("name", ""), ("age", ""), ("legs", "4")]
+  ## ``"name=&age&legs=4" -> @[("name", ""), ("age", ""), ("legs", "4")]``
   for pairStr in search.split('&'):
     let
       pair = pairStr.split('=', 1)
